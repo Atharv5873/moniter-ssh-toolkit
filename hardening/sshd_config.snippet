@@ -1,0 +1,34 @@
+# monitor-ssh-toolkit SSH hardening snippet
+# ------------------------
+# WARNING: Do not enable PasswordAuthentication=no on remote hosts
+# unless you have your public key installed for all required users
+# and you have an alternative console recovery method (cloud console).
+# Test with `sshd -t` before reloading sshd.
+
+# Network and login behaviour
+Port 2270
+# Reduce time attacker has to guess password
+LoginGraceTime 20s
+# Disallow root login
+PermitRootLogin no
+# Disable passwd auth - require keys (enable only after confirming keys exist)
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+PermitEmptyPassword no
+# Limit auth Attempts
+MaxAuthTries 3
+
+# Forwrding & X11
+X11Forwarding no
+AllowTcpForwarding no
+GatewayPorts no
+
+# Misc
+UsePAM yes
+PrintMotd no
+
+# Logging - keep verbose enough for fail2ban
+LogLevel INFO
+SyslogFacility AUTH
+
+#End of snippet

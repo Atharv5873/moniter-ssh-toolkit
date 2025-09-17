@@ -1,0 +1,31 @@
+# monitor--sh tooklit fail2ban configuration (ssh jail)
+# Place in /etc/fail2ban/jail.d/monitor-ssh.conf or /etc/fail2ban/jail.local
+
+[DEFAULT]
+# Ban duration (seconds) - 1 hour
+bantime = 3600
+# Time windows to count failures (seconds) - 10 minutes
+findtime = 600
+# Number of allowed failures before ban
+maxretry = 3
+# Automatically detect log format
+backend = auto
+
+# [sshd] jail
+[sshd]
+enabled = true
+port = 2269
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+
+[sshd-ddos]
+enabled = true
+port = 2269
+filter = sshd-ddos
+logpath = /var/log/auth.log
+maxretry = 6
+findtime = 600
+bantime = 3600
+
+#EOF
